@@ -17,6 +17,21 @@ config :app, AppWeb.Endpoint,
   pubsub: [name: App.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Configures Guardian for authentication
+config :app, AppWeb.Guardian,
+  # optional
+  allowed_algos: ["HS512"],
+  # optional
+  verify_module: Guardian.JWT,
+  issuer: "ShopWithApp",
+  ttl: {30, :days},
+  allowed_drift: 2000,
+  # optional
+  verify_issuer: true,
+  # generated using: JOSE.JWK.generate_key({:oct, 16}) |> JOSE>JWK.to_map |> elem(1)
+  secret_key: %{"k" => "_k-84hJ27xK09mxSbLCHqg", "kty" => "oct"},
+  serializer: AppWeb.Guardian
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
