@@ -2,18 +2,35 @@ defmodule AppWeb.Schema do
   use Absinthe.Schema
   use Absinthe.Relay.Schema, :modern
 
-  import_types AppWeb.Schema.AccountTypes
+  alias AppWeb.Resolvers
 
-  # @fakedb %{
-  #   "1" => %{name: "Bob", email: "bubba@foo.com"},
-  #   "2" => %{name: "Fred", email: "fredmeister@foo.com"},
-  # }
+  import_types AppWeb.Schema.AccountTypes
+  import_types AppWeb.Schema.PostTypes
+
+  node interface do
+    resolve_type(fn
+      %{token: _token}, _ -> :session
+      %App.Accounts.User{}, _ -> :user
+    end)
+  end
 
   query do
+    node field do
+      resolve(fn
+        %{type: :user, id: id}, _ ->
+          id
+          |> String.to_integer()
+          |> Resolvers.User.get_by_id()
+      end)
+    end
+
     field :profile, :user do
-      resolve fn _, %{context: %{current_user: current_user}} ->
-        {:ok, Map.get(@fakedb, current_user.id)}
-      end
+      resolve(fn (_, context) ->
+        case context do
+          %{context: %{current_user: current_user}} -> {:ok, current_user}
+          _ -> {:ok, %{ name: "Guest" }}
+        end
+      end)
     end
   end
 
@@ -24,7 +41,7 @@ defmodule AppWeb.Schema do
       arg :password, non_null(:string)
       arg :username, :string
 
-      resolve &AppWeb.Accounts.UserResolver.create_user_with_email_and_password/2
+      resolve &AppWeb.Resolvers.User.create_user_with_email_and_password/2
     end
 
     @desc "User login via JWT"
@@ -32,7 +49,7 @@ defmodule AppWeb.Schema do
       arg :email, non_null(:string)
       arg :password, non_null(:string)
 
-      resolve &AppWeb.Accounts.UserResolver.login/2
+      resolve &AppWeb.Resolvers.User.login/2
     end
   end
 

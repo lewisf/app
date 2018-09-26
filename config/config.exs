@@ -32,11 +32,25 @@ config :app, AppWeb.Guardian,
   secret_key: %{"k" => "_k-84hJ27xK09mxSbLCHqg", "kty" => "oct"},
   serializer: AppWeb.Guardian
 
+config :ex_admin,
+  repo: App.Repo,
+  module: AppWeb,
+  modules: [
+    App.ExAdmin.Dashboard,
+    App.ExAdmin.Accounts.User
+  ]
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+config :gettext,
+  default_locale: "en/us"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
+config :xain, :after_callback, {Phoenix.HTML, :raw}
+

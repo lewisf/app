@@ -12,9 +12,4 @@ defmodule AppWeb.Accounts do
     Repo.get! User, id
   end
 
-  def store_token(%User{} =user, token) do
-    user
-    |> User.store_token_changeset(%{token: token})
-    |> Repo.update()
-  end
 end

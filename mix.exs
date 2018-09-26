@@ -10,7 +10,8 @@ defmodule App.Mixfile do
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      dialyzer: [flags: ["-Wunmatched_returns", :error_handling, :race_conditions, :underspecs, :no_opaque]]
     ]
   end
 
@@ -20,7 +21,7 @@ defmodule App.Mixfile do
   def application do
     [
       mod: {App.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:gettext, :logger, :runtime_tools]
     ]
   end
 
@@ -39,6 +40,8 @@ defmodule App.Mixfile do
       {:absinthe_relay, "~> 1.4"},
       {:bcrypt_elixir, "~> 1.1"},
       {:comeonin, "~> 4.1"},
+      {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false},
+      {:ex_admin, github: "smpallen99/ex_admin", branch: "phx-1.3"},
       {:guardian, "~> 1.1.1"},
       {:phoenix, "~> 1.3.4"},
       {:phoenix_pubsub, "~> 1.0"},
