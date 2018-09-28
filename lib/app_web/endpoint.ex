@@ -41,12 +41,6 @@ defmodule AppWeb.Endpoint do
 
   # https://hexdocs.pm/absinthe/plug-phoenix.html
   plug AppWeb.Router
-  # plug Absinthe.Plug,
-  #   schema: App.Schema
-
-  # https://hexdocs.pm/absinthe/introspection.html
-  # plug Absinthe.Plug.GraphiQL,
-
 
   @doc """
   Callback invoked for dynamically configuring the endpoint.

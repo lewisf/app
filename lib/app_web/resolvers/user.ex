@@ -2,11 +2,17 @@ defmodule AppWeb.Resolvers.User do
   alias App.Accounts.User
   alias App.Repo
 
+  @spec create_user_with_email_and_password(%{email: any(), password: any()}, any()) :: any()
   def create_user_with_email_and_password(%{email: email, password: password}, _info) do
     User.Authentication.create_user_with_email_and_password(email, password)
   end
 
-  def authenticate_with_sms(%{phone_number: phone_number, sms_code: sms_code}, _info) do
+  def get_auth_code_by_phone_number(%{phone_number: phone_number}, _info) do
+    User.Authentication.authenticate_by_phone_number
+  end
+
+  def verify_auth_code_by_phone_number(%{phone_number: phone_number, sms_code: sms_code}, _info) do
+
   end
 
   def authenticate_with_email_and_password(%{email: email, password: password}, _info) do

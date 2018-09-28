@@ -39,4 +39,10 @@ defmodule AppWeb.Router do
 
     admin_routes()
   end
+
+  scope "/", AppWeb do
+    pipe_through :browser
+
+    get "/*path", PageController, :index
+  end
 end

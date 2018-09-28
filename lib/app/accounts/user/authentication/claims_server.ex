@@ -1,8 +1,8 @@
 defmodule App.Accounts.User.Authentication.Sms.ClaimsServer do
   use GenServer
 
-  def init(claims) do
-    {:ok, claims}
+  def start_link(claims) do
+    GenServer.start_link(__MODULE__, claims, [])
   end
 
   @spec handle_call({:create_claim, String.t()}, map()) :: {:reply, false, map()} | {:reply, true, map()}
@@ -29,6 +29,5 @@ defmodule App.Accounts.User.Authentication.Sms.ClaimsServer do
   end
 
   defp send_claim_code(phone_number) do
-    "asdf"
   end
 end
