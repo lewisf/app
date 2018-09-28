@@ -14,8 +14,7 @@ config :app, AppWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "HhpIaU8F76KPcWaPntAylwnu24Xwvki1837TKYhM7q+66+H/KnllkpnLLrKiv71X",
   render_errors: [view: AppWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: App.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: App.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Guardian for authentication
 config :app, AppWeb.Guardian,
@@ -48,9 +47,13 @@ config :logger, :console,
 config :gettext,
   default_locale: "en/us"
 
+config :ex_twilio,
+  account_sid: {:system, "TWILIO_ACCOUNT_SID"},
+  auth_token: {:system, "TWILIO_AUTH_TOKEN"},
+  workspace_sid: {:system, "TWILIO_WORKSPACE_SID"}
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"
 
 config :xain, :after_callback, {Phoenix.HTML, :raw}
-

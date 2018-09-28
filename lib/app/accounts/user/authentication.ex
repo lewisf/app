@@ -1,5 +1,6 @@
 defmodule App.Accounts.User.Authentication do
   import Comeonin.Bcrypt, only: [checkpw: 2]
+  import Ecto.Query, only: [where: 2]
   alias App.Repo
   alias App.Accounts.User
 
@@ -7,9 +8,6 @@ defmodule App.Accounts.User.Authentication do
     %User{}
     |> User.changeset(%{email: email, password: password})
     |> Repo.insert()
-  end
-
-  def create_user_with_phone_number(phone_number) do
   end
 
   @spec login_with_email_and_password(binary(), any()) ::

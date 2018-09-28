@@ -6,12 +6,14 @@ defmodule App.Mixfile do
       app: :app,
       version: "0.0.1",
       elixir: "~> 1.4",
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      dialyzer: [flags: ["-Wunmatched_returns", :error_handling, :race_conditions, :underspecs, :no_opaque]]
+      dialyzer: [
+        flags: ["-Wunmatched_returns", :error_handling, :race_conditions, :underspecs, :no_opaque]
+      ]
     ]
   end
 
@@ -27,7 +29,7 @@ defmodule App.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
@@ -42,6 +44,8 @@ defmodule App.Mixfile do
       {:comeonin, "~> 4.1"},
       {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false},
       {:ex_admin, github: "smpallen99/ex_admin", branch: "phx-1.3"},
+      {:ex_phone_number, "~>0.1"},
+      {:ex_twilio, "~>0.6.0"},
       {:guardian, "~> 1.1.1"},
       {:phoenix, "~> 1.3.4"},
       {:phoenix_pubsub, "~> 1.0"},
@@ -50,6 +54,7 @@ defmodule App.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:poison, "~> 3.1.0"},
+      {:pot, "~> 0.9"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"}
     ]
