@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+# 1. Give a name to your app
+
+APP="shopwith_app"
+
+# 2. Declare the names of your servers and assign the public DNS
+
+USEAST1="ec2-34-238-220-74.compute-1.amazonaws.com"
+# USEAST2="ec2-1.2.3.4.compute.amazonaws.com"
+# US="ec2-3.4.5.6.compute.amazonaws.com"
+# UK="ec2-5.7.8.9.compute.amazonaws.com"
+
+# 3. Specify a user
+
+USER="ubuntu"
+
+# 4. Which host do you want to build the release on?
+
+BUILD_HOST=$USEAST1
+BUILD_USER=$USER
+BUILD_AT="/tmp/edeliver/$APP/builds"
+
+# 5. Optionally specify the staging host
+
+# STAGING_HOSTS=$SG
+# STAGING_USER=$USER
+# DELIVER_TO="/home/ubuntu"
+
+#6. Specify which host(s) the app is going to be deployed to
+
+PRODUCTION_HOSTS="$USEAST1"
+PRODUCTION_USER=$USER
+DELIVER_TO="/home/ubuntu"
+
+#7. Point to the vm.args file
+
+LINK_VM_ARGS="/home/ubuntu/vm.args"
+
+#8. This is for Phoenix projects
+
+# For *Phoenix* projects, symlink prod.secret.exs to our tmp source
+pre_erlang_get_and_update_deps() {
+  local _prod_secret_path="/home/$USER/prod.secret.exs"
+  if [ "$TARGET_MIX_ENV" = "prod" ]; then
+    __sync_remote "
+      ln -sfn '$_prod_secret_path' '$BUILD_AT/config/prod.secret.exs'
+
+      cd '$BUILD_AT'
+
+      mkdir -p priv/static
+
+      mix deps.get
+
+      npm install
+
+      brunch build --production
+
+      APP='$APP' MIX_ENV='$TARGET_MIX_ENV' $MIX_CMD phoenix.digest $SILENCE
+    "
+  fi
+}

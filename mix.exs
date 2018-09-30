@@ -43,6 +43,8 @@ defmodule App.Mixfile do
       {:bcrypt_elixir, "~> 1.1"},
       {:comeonin, "~> 4.1"},
       {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false},
+      {:distillery, "~>2.0", warn_missing: false},
+      {:edeliver, "~> 1.6.0"},
       {:ex_admin, github: "smpallen99/ex_admin", branch: "phx-1.3"},
       {:ex_phone_number, "~>0.1"},
       {:ex_twilio, "~>0.6.0"},

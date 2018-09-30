@@ -29,4 +29,5 @@ npm-debug.log
 # elixir_ls
 /.elixir_ls
 
-
+# edeliver release
+/.deliver/releases
