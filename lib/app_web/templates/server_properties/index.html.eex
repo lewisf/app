@@ -1,0 +1,7 @@
+<div class="contents">
+  <ul>
+    <%= for {name, value} <- properties() do %>
+      <li><%= name %>: <%= value %></li>
+    <% end %>
+  </ul>
+</div>
