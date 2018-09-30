@@ -43,6 +43,7 @@ defmodule AppWeb.Router do
   scope "/", AppWeb do
     pipe_through :browser
 
+    get "/ping", PageController, :ping
     get "/*path", PageController, :index
   end
 end
