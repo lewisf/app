@@ -11,7 +11,7 @@ use Mix.Releases.Config,
     # This sets the default release built by `mix release`
     default_release: :default,
     # This sets the default environment used by `mix release`
-    default_environment: :prod
+    default_environment: Mix.env()
 
 # For a full list of config options for both releases
 # and environments, visit https://hexdocs.pm/distillery/config/distillery.html
@@ -45,8 +45,8 @@ end
 # when running `mix release`, the first release in the file
 # will be used by default
 
-release :app do
-  set version: current_version(:app)
+release :shopwith do
+  set version: current_version(:shopwith)
   set applications: [
     :runtime_tools
   ]
