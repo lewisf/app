@@ -60,7 +60,7 @@ pre_erlang_get_and_update_deps() {
 
       cd ..
 
-      PORT=8080 APP='$APP' MIX_ENV='$TARGET_MIX_ENV' $MIX_CMD phoenix.digest $SILENCE
+      APP='$APP' MIX_ENV='$TARGET_MIX_ENV' $MIX_CMD phoenix.digest $SILENCE
     "
   fi
 }
