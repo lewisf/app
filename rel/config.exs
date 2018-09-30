@@ -47,8 +47,8 @@ end
 
 release :shopwith do
   set version: current_version(:shopwith)
-  set applications: [
-    :runtime_tools
-  ]
+  # set applications: [
+  #   :runtime_tools
+  # ]
 end
 
