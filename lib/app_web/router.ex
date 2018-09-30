@@ -36,12 +36,19 @@ defmodule AppWeb.Router do
     case Application.get_env(:app, :env) do
       :prod ->
         AppWeb.Endpoint.url()
-          |> URI.parse()
-          |> Map.put(:scheme, "https")
-          |> URI.to_string()
-          |> Kernel.<>("/api/graphql")
+        |> convert_http_to_https()
+        |> Kernel.<>("/api/graphql")
       _ -> AppWeb.Endpoint.url() <> "/api/graphql"
     end
+  end
+
+  @spec convert_http_to_https(String.t()) :: String.t()
+  defp convert_http_to_https(arg) do
+    arg
+    |> URI.parse()
+    |> Map.put(:scheme, "https")
+    |> Map.put(:port, nil)
+    |> URI.to_string()
   end
 
   scope "/admin", ExAdmin do
