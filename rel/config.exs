@@ -45,8 +45,8 @@ end
 # when running `mix release`, the first release in the file
 # will be used by default
 
-release :shopwith do
-  set version: current_version(:shopwith)
+release :app do
+  set version: current_version(:app)
   # set applications: [
   #   :runtime_tools
   # ]
