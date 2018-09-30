@@ -33,7 +33,6 @@ defmodule AppWeb.Router do
   end
 
   def graphql_default_url do
-    IO.puts Mix.env()
     case Mix.env() do
       :prod ->
         AppWeb.Endpoint.url()

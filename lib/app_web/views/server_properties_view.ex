@@ -6,8 +6,9 @@ defmodule AppWeb.ServerPropertiesView do
 
   def properties do
     %{
-      :environment => Mix.env(),
+      :environment => Application.get_env(:app, :env),
       :version => @project_version,
+      :graphql => AppWeb.Router.graphql_default_url()
       # :runtime => @runtime_version
     }
   end
