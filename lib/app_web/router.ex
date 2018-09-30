@@ -32,7 +32,17 @@ defmodule AppWeb.Router do
       schema: AppWeb.Schema
   end
 
-  def graphql_default_url, do: AppWeb.Endpoint.url() <> "/api/graphql"
+  def graphql_default_url do
+    case Mix.env() do
+      :prod ->
+        AppWeb.Endpoint.url()
+          |> URI.parse()
+          |> Map.put(:scheme, "https")
+          |> URI.to_string()
+          |> Kernel.<>("/api/graphql")
+      _ -> AppWeb.Endpoint.url() <> "/api/graphql"
+    end
+  end
 
   scope "/admin", ExAdmin do
     pipe_through :browser
